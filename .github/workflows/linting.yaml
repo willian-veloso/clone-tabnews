@@ -1,4 +1,4 @@
-git name: Linting
+name: Linting
 
 on: pull_request
 
