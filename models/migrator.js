@@ -1,7 +1,6 @@
 import migrationRunner from "node-pg-migrate";
 import { resolve } from "node:path";
 import database from "infra/database";
-import { log } from "node:console";
 
 const defaultMigrationOptions = {
   dryRun: true,
