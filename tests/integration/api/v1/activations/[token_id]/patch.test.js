@@ -13,7 +13,7 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
   describe("Anonymous user", () => {
     test("With nonexistent token", async () => {
       const response = await fetch(
-        "hhtp://localhost:3000/api/v1/activations/256bc49a-132a-42e4-8334-998fd17ee71e",
+        "http://localhost:3000/api/v1/activations/256bc49a-132a-42e4-8334-998fd17ee71e",
         {
           method: "PATCH",
         },
@@ -120,7 +120,7 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
       });
 
       expect(uuidVersion(responseBody.id)).toBe(4);
-      expect(uuidVersion(response.user_id)).toBe(4);
+      expect(uuidVersion(responseBody.user_id)).toBe(4);
 
       expect(Date.parse(responseBody.expires_at)).not.toBeNaN();
       expect(Date.parse(responseBody.created_at)).not.toBeNaN();
@@ -174,7 +174,7 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
       const user1SessionObject = await orchestrator.createSession(user1.id);
 
       const user2 = await orchestrator.createUser();
-      const user2ActivationToken = await orchestrator.create(user2.id);
+      const user2ActivationToken = await activation.create(user2.id);
 
       const response = await fetch(
         `http://localhost:3000/api/v1/activations/${user2ActivationToken.id}`,
