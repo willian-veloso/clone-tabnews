@@ -113,8 +113,6 @@ describe("POST /api/v1/sessions", () => {
 
       const responseBody = await response.json();
 
-      console.log(responseBody.id);
-
       expect(responseBody).toEqual({
         id: responseBody.id,
         token: responseBody.token,
