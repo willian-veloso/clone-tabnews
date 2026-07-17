@@ -16,20 +16,17 @@ describe("Use case: Registration Flow (all sucessful)", () => {
   let createSessionsResponseBody;
 
   test("Create user account", async () => {
-    const createUserResponse = await fetch(
-      "http://localhost:3000/api/v1/users",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: "RegistrationFlow",
-          email: "registration.flow@atlas.dev",
-          password: "RegistrationFlowPassword",
-        }),
+    const createUserResponse = await fetch(`${webserver.origin}/api/v1/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify({
+        username: "RegistrationFlow",
+        email: "registration.flow@curso.dev",
+        password: "RegistrationFlowPassword",
+      }),
+    });
 
     expect(createUserResponse.status).toBe(201);
 
@@ -48,7 +45,7 @@ describe("Use case: Registration Flow (all sucessful)", () => {
     const lastEmail = await orchestrator.getLastEmail();
 
     expect(lastEmail.sender).toBe(`<contato@${process.env.APP_DOMAIN}>`);
-    expect(lastEmail.recipients[0]).toBe("<registration.flow@atlas.dev>");
+    expect(lastEmail.recipients[0]).toBe("<registration.flow@curso.dev>");
     expect(lastEmail.subject).toBe("Ative seu cadastro no Atlas!");
     expect(lastEmail.text).toContain("RegistrationFlow");
 
@@ -67,7 +64,7 @@ describe("Use case: Registration Flow (all sucessful)", () => {
 
   test("Activate account", async () => {
     const activationResponse = await fetch(
-      `http://localhost:3000/api/v1/activations/${activationTokenId}`,
+      `${webserver.origin}/api/v1/activations/${activationTokenId}`,
       {
         method: "PATCH",
       },
@@ -89,14 +86,14 @@ describe("Use case: Registration Flow (all sucessful)", () => {
 
   test("Login", async () => {
     const createSessionsResponse = await fetch(
-      "http://localhost:3000/api/v1/sessions",
+      `${webserver.origin}/api/v1/sessions`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: "registration.flow@atlas.dev",
+          email: "registration.flow@curso.dev",
           password: "RegistrationFlowPassword",
         }),
       },
@@ -110,7 +107,7 @@ describe("Use case: Registration Flow (all sucessful)", () => {
   });
 
   test("Get user information", async () => {
-    const userResponse = await fetch("http://localhost:3000/api/v1/user", {
+    const userResponse = await fetch(`${webserver.origin}/api/v1/user`, {
       headers: {
         cookie: `session_id=${createSessionsResponseBody.token}`,
       },
