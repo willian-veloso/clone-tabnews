@@ -47,7 +47,7 @@ describe("Use case: Registration Flow (all sucessful)", () => {
   test("Receive activation email", async () => {
     const lastEmail = await orchestrator.getLastEmail();
 
-    expect(lastEmail.sender).toBe("<contato@atlas.tec.br>");
+    expect(lastEmail.sender).toBe(`<contato@${process.env.APP_DOMAIN}>`);
     expect(lastEmail.recipients[0]).toBe("<registration.flow@atlas.dev>");
     expect(lastEmail.subject).toBe("Ative seu cadastro no Atlas!");
     expect(lastEmail.text).toContain("RegistrationFlow");
