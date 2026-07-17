@@ -96,6 +96,8 @@ describe("POST /api/v1/sessions", () => {
         password: "tudocorreto",
       });
 
+      await orchestrator.activateUser(createdUser);
+
       const response = await fetch("http://localhost:3000/api/v1/sessions", {
         method: "POST",
         headers: {
@@ -110,8 +112,6 @@ describe("POST /api/v1/sessions", () => {
       expect(response.status).toBe(201);
 
       const responseBody = await response.json();
-
-      console.log(responseBody.id);
 
       expect(responseBody).toEqual({
         id: responseBody.id,
